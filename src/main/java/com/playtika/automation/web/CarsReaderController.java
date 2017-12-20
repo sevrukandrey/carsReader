@@ -5,6 +5,8 @@ import com.playtika.automation.service.CarsReaderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 
 @RestController
@@ -14,7 +16,7 @@ public class CarsReaderController {
     private final CarsReaderService service;
 
     @PostMapping(value = "/cars")
-    public void carsWithFile(@RequestParam("url") String url) {
-        service.readCar();
+    public void carsWithFile(@RequestBody String url) throws IOException {
+        service.convertToCars(url);
     }
 }
