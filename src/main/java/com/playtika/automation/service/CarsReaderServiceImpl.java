@@ -17,7 +17,8 @@ import static org.apache.commons.io.FileUtils.*;
 @Service
 public class CarsReaderServiceImpl implements CarsReaderService {
 
-    private String savedFileLocation = "F:/test99.txt";
+    private String savedFileLocation = "E:/test99.txt";
+
     @Override
     public void convertToCars(String fileUrl) throws IOException {
 
@@ -29,31 +30,25 @@ public class CarsReaderServiceImpl implements CarsReaderService {
 
     private void convertLinesToCarsForSale(String[] lines) {
         List<CarSaleInfo> cars = new ArrayList<>();
-        for (String line : lines) {
-            String[] splitLine = line.split(",");
+        Arrays.stream(lines)
+                .map(line -> line.split(","))
+                .forEachOrdered(elements -> {
+                    CarSaleInfo carSaleInfo = new CarSaleInfo();
+                    carSaleInfo.setBrand(elements[0]);
+                    carSaleInfo.setModel(elements[1]);
+                    carSaleInfo.setColor(elements[2]);
+                    carSaleInfo.setYear(Integer.parseInt(elements[3]));
+                    carSaleInfo.setPlateNumber(elements[4]);
+                    cars.add(carSaleInfo);
+                });
 
-            for (String aSplitLine : splitLine) {
-                CarSaleInfo carSaleInfo = new CarSaleInfo();
-                carSaleInfo.setBrand(splitLine[0]);
-                carSaleInfo.setBrand(splitLine[1]);
-                carSaleInfo.setModel(splitLine[2]);
-                carSaleInfo.setYear(Integer.parseInt(splitLine[3]));
-                carSaleInfo.setPlateNumber(splitLine[4]);
-                cars.add(carSaleInfo);
-            }
-
-
-        }
 
         System.out.println(cars);
     }
 
     private String[] splitDownloadTextToLine() throws IOException {
         String text = Files.readAllLines(Paths.get(savedFileLocation)).toString().replaceAll("[\\[|\\]]", "");
-       String [] array = text.split(" ");
-
-
-        return array;
+        return text.split(" ");
     }
 
     private void downloadFile(String fileUrl) throws IOException {
