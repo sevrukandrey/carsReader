@@ -1,8 +1,10 @@
 package com.playtika.automation.service;
 
+import com.playtika.automation.domain.CarSaleInfo;
+
 import java.io.IOException;
-import java.net.MalformedURLException;
+import java.util.List;
 
 public interface CarsReaderService {
-    void convertToCars(String url) throws IOException;
+    void resolveCarFromFile(String url) throws IOException;
 }
