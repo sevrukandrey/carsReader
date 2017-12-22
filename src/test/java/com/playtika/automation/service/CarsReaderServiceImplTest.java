@@ -14,10 +14,10 @@ public class CarsReaderServiceImplTest {
     private CarsReaderService service;
     String url = "https://fex.net/load/203511103047/158521824";
 
-    @Before
-    public void init() {
-        service = new CarsReaderServiceImpl();
-    }
+//    @Before
+//    public void init() {
+//        service = new CarsReaderServiceImpl();
+//    }
 
 
 }

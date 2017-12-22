@@ -9,16 +9,16 @@ import java.util.function.Function;
 
 
 @Component
-public abstract class ToCarSaleInfo implements Function {
-
+public class ToCarSaleInfo implements Function<String, CarSaleInfo> {
+    @Override
     public CarSaleInfo apply(String line) {
         CarSaleInfo carSaleInfo = new CarSaleInfo();
         String[] split = line.split(",");
-        for (String aSplit : split) {
-            carSaleInfo.setCar(new Car(split[0], split[1], split[2], split[3], Integer.parseInt(split[4])));
+        Arrays.stream(split).forEach(aSplit -> {
+            carSaleInfo.setCar(new Car(split[0], split[1], split[4], split[2], Integer.parseInt(split[3])));
             carSaleInfo.setPrice(Double.parseDouble(split[6]));
             carSaleInfo.setOwnerContacts(split[5]);
-        }
+        });
         return carSaleInfo;
     }
 }
