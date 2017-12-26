@@ -7,21 +7,27 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Component
 @Slf4j
 public class UrlResolverImpl implements UrlResolver {
+
     @Override
     public List<String> resolve(String url) throws IOException {
-        log.debug("Start resolving line from url");
-        InputStream is = new URL(url).openConnection().getInputStream();
+        log.debug("Start resolving line from url:{}", url);
+
+        InputStream is = new URL(url)
+            .openConnection()
+            .getInputStream();
         BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-        log.info("Resolved file from"+ url + "to List of String");
-        return reader.lines().collect(Collectors.toList());
+
+        log.info("Resolved file from url:{} to List of String", url);
+
+        return reader
+            .lines()
+            .collect(Collectors.toList());
     }
 }

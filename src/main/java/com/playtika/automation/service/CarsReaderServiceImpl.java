@@ -17,7 +17,11 @@ public class CarsReaderServiceImpl implements CarsReaderService {
     @Override
     public void resolveCarFromFile(String url) throws IOException {
         List<String> linesFromFile = urlResolver.resolve(url);
-        linesFromFile.stream().map(toCarSaleInfo).forEach(consumeCarSaleInfo);
+        linesFromFile
+            .stream()
+            .filter(line -> line.length() == 7)
+            .map(toCarSaleInfo)
+            .forEach(consumeCarSaleInfo);
     }
 }
 

@@ -2,12 +2,9 @@ package com.playtika.automation.domain;
 
 import lombok.*;
 
-@Setter
-@Getter
-@ToString
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
 public class CarSaleInfo {
     private Car car;
     private String ownerContacts;
