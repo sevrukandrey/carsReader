@@ -1,6 +1,6 @@
 package com.playtika.automation.domain;
 
-import lombok.*;
+import lombok.Value;
 
 @Value
 public class Car {

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
-@FeignClient(name = "CarShop", url = "http://localhost:8080",
+@FeignClient(name = "CarShop",
     configuration = CarShopClientConfiguration.class,
     fallbackFactory = CarShopClient.HystrixClientFallbackFactory.class)
 public interface CarShopClient {

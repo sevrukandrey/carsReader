@@ -15,8 +15,6 @@ public class ConsumeCarSaleInfo implements Consumer<CarSaleInfo> {
 
     @Override
     public void accept(CarSaleInfo carSaleInfo) {
-
-
         carShopClient.addCar(carSaleInfo.getCar(), carSaleInfo.getPrice(), carSaleInfo.getOwnerContacts());
     }
 }

@@ -16,14 +16,12 @@ import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static java.lang.String.format;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Java6Assertions.assertThatCode;
-import static org.assertj.core.api.Java6Assertions.assertThatThrownBy;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
-import static org.assertj.core.api.Assertions.assertThat;
 
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = RANDOM_PORT, classes = CarShopClientConfiguration.class)
-@AutoConfigureWireMock(port = 8080)
+@AutoConfigureWireMock
 public class CarShopClientTest {
 
     @Autowired
@@ -39,7 +37,6 @@ public class CarShopClientTest {
         price = 100;
         ownerContacts = "093774";
     }
-
 
     @Test
     public void shouldConsumeDataFromFile() throws IOException {
@@ -72,9 +69,8 @@ public class CarShopClientTest {
                 .withBody("Bad request")));
 
         assertThatCode(() -> {
-            carShopClient.addCar(car, price, ownerContacts);
+            long resultId = carShopClient.addCar(car, price, ownerContacts);
+            assertThat(resultId).isEqualTo(-1);
         }).doesNotThrowAnyException();
     }
-
-
 }

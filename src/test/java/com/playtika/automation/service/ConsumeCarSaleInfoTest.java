@@ -17,8 +17,8 @@ public class ConsumeCarSaleInfoTest {
     private CarSaleInfo carSaleInfo;
     @Mock
     private CarShopClient carShopClient;
-    private ConsumeCarSaleInfo consumeCarSaleInfo;
 
+    private ConsumeCarSaleInfo consumeCarSaleInfo;
 
     @Before
     public void init() {
@@ -29,14 +29,8 @@ public class ConsumeCarSaleInfoTest {
 
     @Test
     public void shouldConsumeCarSaleInfo() {
-
-        when(carShopClient.addCar(carSaleInfo.getCar(),
-                carSaleInfo.getPrice(),
-                carSaleInfo.getOwnerContacts()))
-                .thenReturn(1L);
-
         consumeCarSaleInfo.accept(carSaleInfo);
 
-        verify(carShopClient).addCar(any(Car.class), anyDouble(), anyString());
+        verify(carShopClient).addCar(carSaleInfo.getCar(), carSaleInfo.getPrice(), carSaleInfo.getOwnerContacts());
     }
 }

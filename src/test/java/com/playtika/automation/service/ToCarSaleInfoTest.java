@@ -29,10 +29,10 @@ public class ToCarSaleInfoTest {
 
         CarSaleInfo resultedCarSaleInfo = toCarSaleInfo.apply(line);
 
-        assertThat(resultedCarSaleInfo).isEqualToComparingFieldByField(carSaleInfo);
+        assertThat(resultedCarSaleInfo).isEqualTo(carSaleInfo);
     }
 
-    @Test
+    @Test(expected = IndexOutOfBoundsException.class)
     public void shouldReturnEmptyCarSaleInfoIfInformationInFileIsNotFull() {
         String line = "Audy";
 
