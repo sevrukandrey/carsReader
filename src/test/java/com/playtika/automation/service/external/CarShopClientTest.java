@@ -15,7 +15,10 @@ import java.io.IOException;
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static java.lang.String.format;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Java6Assertions.assertThatCode;
+import static org.assertj.core.api.Java6Assertions.assertThatThrownBy;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
+import static org.assertj.core.api.Assertions.assertThat;
 
 
 @RunWith(SpringRunner.class)
@@ -56,7 +59,7 @@ public class CarShopClientTest {
     }
 
     @Test
-    public void shouldReturnBadRequest() throws IOException {
+    public void shouldNotThrowException() throws IOException {
         stubFor(post(urlEqualTo(format("/cars?price=%s&ownerContacts=%s", price, ownerContacts)))
             .withRequestBody(equalToJson(
                 "{\"brand\": \"Ford\"," +
@@ -68,7 +71,9 @@ public class CarShopClientTest {
                 .withHeader("Content-Type", "application/json")
                 .withBody("Bad request")));
 
-        carShopClient.addCar(car, price, ownerContacts);
+        assertThatCode(() -> {
+            carShopClient.addCar(car, price, ownerContacts);
+        }).doesNotThrowAnyException();
     }
 
 
