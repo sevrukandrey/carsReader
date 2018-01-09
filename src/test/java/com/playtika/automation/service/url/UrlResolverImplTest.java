@@ -24,24 +24,17 @@ public class UrlResolverImplTest {
 
     private UrlResolver urlResolver;
 
-    private List<String> expected;
-    private String fileLocation;
-    private String emptyFileLocation;
-
     @Before
     public void init() throws IOException {
-        expected = new ArrayList<>();
-        expected.add("Audy,q1,green,2010,aa1010aa,0937746730,100");
-        expected.add("Bmw,x5,black,2011,aa1050aa,0937746731,200");
-        File file = createFileWithData(expected, "test.txt");
-        File emptyFile = createFileWithData(new ArrayList<>(), "testEmpty.txt");
-        fileLocation = getFileLocation(file);
-        emptyFileLocation = getFileLocation(emptyFile);
         urlResolver = new UrlResolverImpl();
     }
 
     @Test
     public void shouldProcessUrlLineByLineToStringList() throws IOException {
+        List<String> expected = addLines();
+
+        String fileLocation = createFileWithData(expected);
+
         List<String> resolve = urlResolver.resolve(fileLocation);
 
         assertThat(resolve).hasSize(2);
@@ -50,8 +43,16 @@ public class UrlResolverImplTest {
 
     @Test
     public void shouldReturnEmptyListIfDownloadedFileIsEmpty() throws IOException {
+        String emptyFileLocation = createEmptyFile();
+
         List<String> resolve = urlResolver.resolve(emptyFileLocation);
+
         assertThat(resolve).isEmpty();
+    }
+
+    private String createEmptyFile() throws IOException {
+        File emptyFile = createFileWithData(new ArrayList<>(), "testEmpty.txt");
+        return getFileLocation(emptyFile);
     }
 
     public File createFileWithData(List<String> expected, String name) throws IOException {
@@ -62,6 +63,18 @@ public class UrlResolverImplTest {
 
     private String getFileLocation(File file) throws MalformedURLException {
         return file.toURI().toURL().toString();
+    }
+
+    private String createFileWithData(List<String> expected) throws IOException {
+        File file = createFileWithData(expected, "test.txt");
+        return getFileLocation(file);
+    }
+
+    private List<String> addLines() {
+        List<String> expected = new ArrayList<>();
+        expected.add("Audy,q1,green,2010,aa1010aa,0937746730,100");
+        expected.add("Bmw,x5,black,2011,aa1050aa,0937746731,200");
+        return expected;
     }
 
 }

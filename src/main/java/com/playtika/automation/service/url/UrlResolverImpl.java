@@ -1,6 +1,7 @@
 package com.playtika.automation.service.url;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
@@ -19,15 +20,9 @@ public class UrlResolverImpl implements UrlResolver {
     public List<String> resolve(String url) throws IOException {
         log.debug("Start resolving line from url:{}", url);
 
-        InputStream is = new URL(url)
-            .openConnection()
-            .getInputStream();
-        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-
-        log.info("Resolved file from url:{} to List of String", url);
-
-        return reader
-            .lines()
-            .collect(Collectors.toList());
+        InputStream inputStream = new URL(url).openStream();
+        List<String> dataFromUrl = IOUtils.readLines(inputStream, "UTF-8");
+        inputStream.close();
+        return dataFromUrl;
     }
 }

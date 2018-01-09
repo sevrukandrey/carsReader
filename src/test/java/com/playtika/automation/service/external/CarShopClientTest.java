@@ -30,23 +30,24 @@ public class CarShopClientTest {
     private Car car;
     private double price;
     private String ownerContacts;
+    private String carInJson;
 
     @Before
     public void init() {
         car = new Car("Ford", "fiesta", "10-10", "green", 2010);
         price = 100;
         ownerContacts = "093774";
+        carInJson = "{\"brand\": \"Ford\"," +
+                "\"model\":\"fiesta\"," +
+                "\"plateNumber\":\"10-10\"," +
+                "\"color\":\"green\"," +
+                "\"year\":2010}";
     }
 
     @Test
     public void shouldConsumeDataFromFile() throws IOException {
         stubFor(post(urlEqualTo(format("/cars?price=%s&ownerContacts=%s", price, ownerContacts)))
-            .withRequestBody(equalToJson(
-                "{\"brand\": \"Ford\"," +
-                    "\"model\":\"fiesta\"," +
-                    "\"plateNumber\":\"10-10\"," +
-                    "\"color\":\"green\"," +
-                    "\"year\":2010}"))
+            .withRequestBody(equalToJson(carInJson))
             .willReturn(aResponse()
                 .withStatus(200)
                 .withHeader("Content-Type", "application/json")
@@ -58,13 +59,9 @@ public class CarShopClientTest {
     @Test
     public void shouldNotThrowException() throws IOException {
         stubFor(post(urlEqualTo(format("/cars?price=%s&ownerContacts=%s", price, ownerContacts)))
-            .withRequestBody(equalToJson(
-                "{\"brand\": \"Ford\"," +
-                    "\"model\":\"fiesta\"," +
-                    "\"plateNumber\":\"10-10\"," +
-                    "\"color\":\"green\"," +
-                    "\"year\":2010}"))
-            .willReturn(aResponse().withStatus(400)
+            .withRequestBody(equalToJson(carInJson))
+            .willReturn(aResponse()
+                    .withStatus(400)
                 .withHeader("Content-Type", "application/json")
                 .withBody("Bad request")));
 

@@ -14,7 +14,7 @@ public class CarShopClientConfiguration {
 
     @Bean
     FallbackFactory fallbackFactory() {
-        return new CarShopClient.HystrixClientFallbackFactory();
+        return new HystrixClientFallbackFactory();
     }
 
 }
