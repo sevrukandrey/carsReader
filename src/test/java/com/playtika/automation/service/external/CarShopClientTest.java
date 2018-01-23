@@ -167,8 +167,4 @@ public class CarShopClientTest {
         assertThat(carShopClient.createDeal(id, dealRequest)).isEqualTo(2L);
     }
 
-
-
-
-
 }
