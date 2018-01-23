@@ -9,4 +9,6 @@ public class CarSaleInfo {
     private Car car;
     private String ownerContacts;
     private double price;
+
+
 }
