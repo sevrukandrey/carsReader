@@ -1,6 +1,5 @@
 package com.playtika.automation.web;
 
-import com.playtika.automation.domain.Car;
 import com.playtika.automation.service.CarsReaderService;
 import org.apache.commons.io.FileUtils;
 import org.junit.Before;
@@ -45,7 +44,6 @@ public class CarsReaderControllerIntegrationTest {
         expected.add("Audy,q1,green,2010,aa1010aa,0937746730,100");
         File file = createFileWithData(expected, "test.txt");
         fileLocation = getFileLocation(file);
-        Car car = new Car("Audy", "q1", "aa11aa", "green", 2010);
     }
 
     @Test

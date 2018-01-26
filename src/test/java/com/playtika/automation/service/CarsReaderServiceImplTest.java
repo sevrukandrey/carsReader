@@ -1,9 +1,8 @@
 package com.playtika.automation.service;
 
-import com.playtika.automation.domain.Car;
-import com.playtika.automation.domain.CarSaleInfo;
-import com.playtika.automation.service.external.CarShopClient;
 import com.playtika.automation.service.url.UrlResolver;
+import com.playtika.qa.carsclient.CarShopClient;
+import com.playtika.qa.carsclient.domain.CarRequest;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -37,15 +36,13 @@ public class CarsReaderServiceImplTest {
     public void shouldComposeCarSaleInfoFromEachLine() throws IOException {
         List<String> linesFromUrl = createLines();
 
-        CarSaleInfo carSaleInfo = createCarSaleInfo();
-
         when(urlResolver.resolve("text")).thenReturn(linesFromUrl);
 
         carsReaderService.resolveCarFromFile("text");
 
-        verify(carShopClient, times(2)).addCar(carSaleInfo.getCar(),
-                carSaleInfo.getPrice(),
-                carSaleInfo.getOwnerContacts());
+        CarRequest carRequest = constructCarRequest();
+
+        verify(carShopClient, times(2)).addCar(carRequest, 100, "0937746730");
 
     }
 
@@ -58,10 +55,6 @@ public class CarsReaderServiceImplTest {
         carsReaderService.resolveCarFromFile("text");
     }
 
-    private CarSaleInfo createCarSaleInfo() {
-        Car car = new Car("Audy", "q1", "aa1010aa", "green", 2010);
-        return new CarSaleInfo(car, "0937746730", 100.0);
-    }
 
     private List<String> createLines() {
         List<String> linesFromUrl = new ArrayList<>();
@@ -70,4 +63,7 @@ public class CarsReaderServiceImplTest {
         return linesFromUrl;
     }
 
+    private CarRequest constructCarRequest() {
+        return new CarRequest("Audy", "q1", "aa1010aa", "green", 2010);
+    }
 }

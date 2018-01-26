@@ -9,5 +9,4 @@ public class Car {
     private String plateNumber;
     private String color;
     private int year;
-
 }

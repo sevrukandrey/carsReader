@@ -76,5 +76,4 @@ public class UrlResolverImplTest {
         expected.add("Bmw,x5,black,2011,aa1050aa,0937746731,200");
         return expected;
     }
-
 }
